@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "projetosuperacao-1382",
+  "private_key_id": "3791b60d593978074156765f637fa21915a1e05f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCO5B3Cz7d+/bnU\nrpjvBBYFIDsdDbP9GT8s0RxSOpgHowE81igoUH0ssnfHVjNyntCsJFjFHJfl7Q72\nG8yDw+BaDfHMkcFqNZ3qNChu3bRFwn4qV5EDtTFCmhe8VZzrr787tgnHUUXB07IB\nYowhvFX1f7ZYVoBU2dCEuIyY46Y3/ZHQsjZSj+E0gF5NlThd6RJ1cdDVepNG4EgI\nXonqgFDPicilJQMwe6FG1R5vx8mITtvuSVp6jihlU4fsaZ5m+j7QVf9ao2IkKrz/\nXXZBNyzhJnHMPkOwWh2LpWZahYzGPHUTx+6E47TdlqBFWZsenPxxxlkJTMRz+UKN\n+duVZi2HAgMBAAECggEBAIyv0RWUCmkAS805st3yOfQGDe3HJiXWi7sGkEnt4u3x\n8jAB8zvuM7CkbwZWuwTplS9IAhbg1jXNt+Nc73n0i5pfDGmMQNDfxYFopT6zDuF4\nY1wxJ1htN/kJWsFV0dDEExcpXmtee74hPqvaaXp1wnSar+A+GtBwPLvQMK3/xhJt\nFpyuo4dhQEy4pIjScjsPPn05Fr1LoJUbl08F+VHpnporwrkTF/5+Qgp2FuXklOnM\nxhAQilZtbiASbI3Vv82f5h6LOSJ6wRy30Uf/DNr6A/oN+uNZSFOmL4S9tYzcJC7M\n4BmmDeJhWOWqAhhFB8wK0DTrCwZMI8a1UQgdVbUzlMECgYEA7/1f0fYnv9YLigJV\nb6OVGSvVHP8WjbCB+8J90oD9aLt+gWhjzZBb2nlDjALNNBRiAT2PW9Nw4bBgMoB7\nHxmaQ7pk27tfZe/Dc3Vw4al7O0Ho0XE6jtvuaplDLdvPSHqJuB5NxscO0t3bGZZ6\neQ9rOh/beBhTTTZfQw8DkMFh4/cCgYEAmGx1T+u+3eRDzZ1vDCTMj32+zmznelhH\nKJBhXqVqToJgNWugUMeri7OtSmzu7KWM9Hmd96ydNOEdBUNsYEurjX8i0fNXztHf\noFB3kBHc6LoTi2L03p5b5W6jNp6+9YwRpHxmT+vre+PesawzeLwVP5Zn1f5xcIAp\ngfIykM2NfvECgYEAz16bznwpyqy0mdL8ahPqgK6MXprYrSQInTdoq11EGpxwand+\nTaDgjb5crH27PLYkHThJSKpCjvFtnhXAzZW846sK/YdBnn5336tqF8PvtLt15ow1\ncj3+HGREVTrrOJCRseOVhx5346NKcCjDuRmmqLngVTyHtl82H2a4yPsgj+8CgYAj\n2NYaLrJb0xRTJiR4sareUE9wktI5xsstcg9ESBjhT+46gg5ZESx6FY66wzXJuAGX\neYa6OgFa71p442t4ljNJes4AnH9ZJ6i1Nld4LYtLvH9eN66pMIsiQUvnS5xTeVao\n3YzeXPir0WKNXJdaXLmOk9vlywp4z9tzMTfNMFqHsQKBgQDDedprvxgb2Kdr1n1G\nzcCUTO+r1vVbZxGqRV4Ivd2IL/wEdvRVW5mo0SQKdM0E6UY9LL76MqUgU3C/zByZ\nCIxeSuwnV2zC1C2gVDJisF0NXaeZqln71J/O7v/zXsnkjpNyEhgT64VtNyQ6rDhQ\n5Fc9hJnSDv9e5LQftFoNxs5+Lg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "superacao@projetosuperacao-1382.iam.gserviceaccount.com",
+  "client_id": "114479851302719230448",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/superacao%40projetosuperacao-1382.iam.gserviceaccount.com"
+}

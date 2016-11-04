@@ -12,13 +12,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
-
 
 // Firebase
 firebase.initializeApp({
@@ -27,51 +26,45 @@ firebase.initializeApp({
 });
 
 
-// Change the message data
-// ... as key-value
-message.addData('message','Vou indo!');
-message.addData('title','Notificação');
-message.addData('count', '2');
-message.addData('sound',  'file://sounds/reminder.mp3');
-message.addData('icon', 'http://icons.com/?cal_id=1');
-
 var sender = new gcm.Sender('AIzaSyCsYtTFahDWEpT0s9RgtwCbKFRxk0VbOSA');
-
-
-var registrationTokens = [];
-registrationTokens.push("e_MCJsHWNZ0:APA91bEmMeWv8m6Mpk52yNiQgBzPCFJu3PK7TVSaXZ38AKzOV4NhHv27ADMswCL1aTI1ttHkC__gsHuMM6veHf5klg331vBFX6029tJGyeqtmnXJWwP0kFsXFe0fc-XQvqIyzBiNjeVv");
 
 // ================= GENERATE NOTIFICATION ================
 app.post('/notification', function(req, res) {
   var idToken = req.body.token;
+  var tokenDevice = req.body.token_device;
+  var message = req.body.name_user + ": " + req.body.message;
+
   firebase.auth().verifyIdToken(idToken).then(function(decodedToken) {
-    //res.send(req.body);
-    console.log(decodedToken);
+    generatePush(tokenDevice, decodedToken.user_id, message);
   });
+  res.send("");
 });
-
-// ================== NOTIFICATION =============================
-app.get('/generate-notification', function(req, res) {
-  sender.send(message, { registrationTokens: registrationTokens }, function (err, response) {
-    if(err) {
-       console.error(err);
-       res.send("Algo deu errado!");
-    } else {
-      console.log(response);
-      res.send("Notificação enviada!");
-    }
-  });
-});
-
-
-
-
-app.get('/generate-token', function(req, res) {
-  res.sendFile(path.join(__dirname + '/generateToken.html'));
-});
-
-
-
 
 app.listen(3000);
 console.log('Server esta na porta 3000....');
+
+function generatePush(tokenDevice, userUid, msg) {
+  var registrationTokensDevice = [];
+
+  console.log(userUid);
+  message.addData('user_uid', userUid);
+  message.addData('title','Superação: Nova mensagem!');
+  message.addData('body', msg);
+  message.addData('sound',  'file://sounds/reminder.mp3');
+  message.addData('icon', 'ic_laucher');
+  message.addData('style', 'inbox');
+  message.addData('summaryText', 'Há %n% novas mensagens');
+  registrationTokensDevice.push(tokenDevice);
+
+  sender.send(message, {registrationTokens: registrationTokensDevice}, function(error, success) {
+    if(error) {
+      console.log(error);
+    } else {
+      console.log(success);
+    }
+  });
+}
+
+/*app.get('/generate-token', function(req, res) {
+  res.sendFile(path.join(__dirname + '/generateToken.html'));
+});*/

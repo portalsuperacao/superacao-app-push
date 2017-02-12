@@ -4,13 +4,12 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "body-parser": "^1.15.2",
+    "body-parser": "^1.16.1",
     "express": "^4.14.0",
-    "fcm": "^1.0.3",
-    "fcm-node": "^1.0.14",
     "firebase": "^3.3.0",
-    "node-gcm": "^0.14.4",
-    "nodemon": "^1.10.2"
+    "method-override": "^2.3.7",
+    "nodemon": "^1.10.2",
+    "request": "^2.79.0"
   },
   "devDependencies": {},
   "scripts": {

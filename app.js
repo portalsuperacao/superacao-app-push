@@ -1,70 +1,68 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
-var gcm = require('node-gcm');
-var firebase = require('firebase');
+var express = require('express')
+var app = express()
+var server = require('http').Server(app)
+var port = process.env.PORT || 8080
+var firebase = require('firebase')
+var request = require('request')
+var bodyParser = require('body-parser')
+var methodOverride = require('method-override')
 
-var app = express();
-
-var message = new gcm.Message();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({'extended' : 'true'}))
+app.use(bodyParser.json())
+app.use(methodOverride('X-HTTP-Method-Override'))
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,accesstoken')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  next()
+})
 
-// Firebase
-firebase.initializeApp({
-  databaseURL: "https://superacao-dc62e.firebaseio.com",
-  serviceAccount: "./credentials.json"
-});
-
-
-var sender = new gcm.Sender('AIzaSyCsYtTFahDWEpT0s9RgtwCbKFRxk0VbOSA');
-
-// ================= GENERATE NOTIFICATION ================
-app.post('/notification', function(req, res) {
-  var idToken = req.body.token;
-  var tokenDevice = req.body.token_device;
-  var message = req.body.name_user + ": " + req.body.message;
-
-  firebase.auth().verifyIdToken(idToken).then(function(decodedToken) {
-    generatePush(tokenDevice, decodedToken.user_id, message);
-  });
-  res.send("");
-});
-
-app.listen(3000);
-console.log('Server esta na porta 3000....');
-
-function generatePush(tokenDevice, userUid, msg) {
-  var registrationTokensDevice = [];
-
-  console.log(userUid);
-  message.addData('user_uid', userUid);
-  message.addData('title','Superação: Nova mensagem!');
-  message.addData('body', msg);
-  message.addData('sound',  'file://sounds/reminder.mp3');
-  message.addData('icon', 'ic_laucher');
-  message.addData('style', 'inbox');
-  message.addData('summaryText', 'Há %n% novas mensagens');
-  registrationTokensDevice.push(tokenDevice);
-
-  sender.send(message, {registrationTokens: registrationTokensDevice}, function(error, success) {
-    if(error) {
-      console.log(error);
-    } else {
-      console.log(success);
-    }
-  });
+var config = {
+  apiKey: ' AIzaSyAnTqOEZHBU-1CMx0fKY2v4zFeGvPnvA1I',
+  authDomain: 'superacao-dc62e.firebaseapp.com',
+  databaseURL: 'https://superacao-dc62e.firebaseio.com',
+  messagingSenderId: '1018181753983'
 }
 
-/*app.get('/generate-token', function(req, res) {
-  res.sendFile(path.join(__dirname + '/generateToken.html'));
-});*/
+var Firebase = firebase.initializeApp(config)
+app.database = Firebase.database().ref()
+
+//CRIE UMA CONTA DE USUÁRIO NO FIREBASE EXCLUSIVA PARA USO NO SERVIDOR
+firebase.auth().signInWithEmailAndPassword('root@gmail.com', '123456').then(function(result) {
+  console.log('logado!')
+}).catch(function(error) {
+  console.log(error.code)
+  console.log(error.message)
+})
+
+//PUSH NOTIFICATION
+app.database.child('notifications').on('child_added', function(snapshot) {
+  var obj = snapshot.val()
+  obj.key = snapshot.key
+
+  request({
+      url: 'https://fcm.googleapis.com/fcm/send',
+      method: 'POST',
+      headers: {
+        'Content-Type' :'application/json',
+        'Authorization': 'key=AAAA7RBcnH8:APA91bFwdJUT6HO6mvNSL61t839LnM9RxcrYUhwIEtJQ1R2z8awuorCQALyjxssXVN8U7MqROgtr_JUD4Dt32yTYjdSTRSKoFoOzjdZJgT0aDhAPQ6HqOUd7k2Fa7npd61eQ5_D7dbxI'
+      },
+      body: JSON.stringify(obj)
+    },
+    function(error, response, body) {
+      if (error) {
+        console.error(error)
+      } else if (response.statusCode >= 400) {
+        console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage);
+      } else {
+        app.database.child("notifications").child(obj.key).remove();
+      }
+    })
+})
+
+
+server.listen(port, '', function() {
+  console.log("Server On: " + server.address().port)
+})

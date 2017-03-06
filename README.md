@@ -1,3 +1,9 @@
+# Conhecimentos minimos
+* NodeJS
+
+# Configurações basicas
+Para utilizar este servidor é necessário você possuir o nodejs instalado em sua máquina
+
 # Configurações iniciais
 Para utilizar o servidor de Push Notification do chat, é necessario realizar as configurações de dados.
 
@@ -27,10 +33,10 @@ var config = {
 ...
 ```
 
-# Build no docker
-Para iniciar o projeto, faça os seguintes comandos:
+# Build com o Docker
+Para iniciar o projeto com o docker, faça os seguintes comandos:
 ```docker
-docker build -t server-notification:1.0 . 
+docker build -t superacao-server-notification:1.0 . 
 docker run -it -p 8080:8080 server-notification:1.0 bash
 ```
 
